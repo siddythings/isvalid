@@ -8,7 +8,7 @@ from jose import JWTError, jwt
 from google.oauth2 import id_token as google_id_token
 from google.auth.transport import requests as google_requests
 from datetime import datetime, timedelta
-from api.settings.mongo import LnkrDB, wallets_collection, users_collection
+from api.settings.mongo import IsValidDB, users_collection
 from bson.objectid import ObjectId
 from pytz import utc
 
@@ -82,7 +82,7 @@ def authenticate_token(f):
                 HTTPStatusCode.UNAUTHORIZED, message=str(e)
             )
 
-        user_details = LnkrDB.users.find_one({'email': email})
+        user_details = IsValidDB.users.find_one({'email': email})
         if not user_details:
             return ResponseHandler.error(
                 HTTPStatusCode.NOT_FOUND, message="User not found"
@@ -124,7 +124,7 @@ def aadhar_amount_check(f):
 
 
 def check_and_insert_email(token_info):
-    existing_email = LnkrDB.users.find_one(
+    existing_email = IsValidDB.users.find_one(
         {"email": token_info.get("email")}, {'_id': 0})
 
     if existing_email:
@@ -177,7 +177,7 @@ def get_user_details_from_username(f):
                 HTTPStatusCode.UNAUTHORIZED, message="Username is missing"
             )
 
-        user_details = LnkrDB.users.find_one({'username': username})
+        user_details = IsValidDB.users.find_one({'username': username})
 
         if not user_details:
             return ResponseHandler.error(
@@ -215,7 +215,7 @@ def authenticate_courses_users_token(f):
                 HTTPStatusCode.UNAUTHORIZED, message=str(e)
             )
 
-        user_details = LnkrDB.courses_users.find_one({'email': email})
+        user_details = IsValidDB.courses_users.find_one({'email': email})
         if not user_details:
             return ResponseHandler.error(
                 HTTPStatusCode.NOT_FOUND, message="User not found"

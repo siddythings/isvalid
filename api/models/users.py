@@ -1,4 +1,4 @@
-from api.settings.mongo import users_collection, wallets_collection
+from api.settings.mongo import users_collection
 from datetime import datetime
 from pytz import utc
 

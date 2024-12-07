@@ -9,7 +9,7 @@ from api.auth import (
 )
 from bson.objectid import ObjectId
 from datetime import timedelta
-from api.settings.mongo import LnkrDB
+from api.settings.mongo import IsValidDB
 from api.common.response_handler import ResponseHandler
 from api.common.http_status_codes import HTTPStatusCode
 from api.models.users import Users as UsersModel
@@ -120,7 +120,7 @@ class LoginUser(Resource):
         email = data.get("email")
         password = data.get("password")
 
-        user = LnkrDB.users.find_one({"email": email})
+        user = IsValidDB.users.find_one({"email": email})
         if user and user["password"] == password:
             access_token_expires = timedelta(
                 minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
