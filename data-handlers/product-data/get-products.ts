@@ -10,6 +10,7 @@ export const getProducts = async () => {
   const res = await data.json();
   return res.data
 };
+
 export const getProductQRByID = async (id:string) => {
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}qr/${id}`, {
     method: "GET",

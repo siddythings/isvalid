@@ -17,14 +17,14 @@ export const users: User[] = [
     verified: false,
     status: 'Active'
   },
-  {
-    id: 2,
-    name: 'John Doe',
-    company: 'TechCorp',
-    role: 'Backend Developer',
-    verified: true,
-    status: 'Active'
-  },
+  // {
+  //   id: 2,
+  //   name: 'John Doe',
+  //   company: 'TechCorp',
+  //   role: 'Backend Developer',
+  //   verified: true,
+  //   status: 'Active'
+  // },
   {
     id: 3,
     name: 'Alice Johnson',

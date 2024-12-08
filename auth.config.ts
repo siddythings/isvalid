@@ -15,12 +15,15 @@ const authConfig = {
         },
         password: {
           type: 'password'
+        },
+        name : {
+          type: 'name'
         }
       },
       async authorize(credentials, req) {
         const user = {
           id: '1',
-          name: 'John',
+          name: credentials?.name as string,
           email: credentials?.email as string
         };
         if (user) {
