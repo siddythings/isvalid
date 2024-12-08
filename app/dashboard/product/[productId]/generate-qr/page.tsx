@@ -16,6 +16,7 @@ export const metadata = {
 type PageProps = { params: { productId: string } };
 
 export default async function Page({ params }: PageProps) {
+  
   return (
     <PageContainer scrollable>
       <div className="flex-1 space-y-4">
@@ -23,7 +24,7 @@ export default async function Page({ params }: PageProps) {
           <QRForm />
         </Suspense>
         <Suspense fallback={<FormCardSkeleton />}>
-          <QrListing />
+          <QrListing productID = {params?.productId} />
         </Suspense>
       </div>
     </PageContainer>

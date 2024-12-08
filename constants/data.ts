@@ -110,16 +110,23 @@ export type Employee = {
   profile_picture?: string | null; // Profile picture can be a string (URL) or null (if no picture)
 };
 
-export type Product = {
-  photo_url: string;
+export interface Product {
+  id: string;
+  user_id: string;
+  is_published: boolean;
+  is_deleted: boolean;
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
+  product_details: ProductDetails;
+}
+
+export interface ProductDetails {
   name: string;
+  price: string; // If price can be a number, update to `number`
   description: string;
-  created_at: string;
-  price: number;
-  id: number;
-  category: string;
-  updated_at: string;
-};
+  image: string; // URL string
+}
+
 
 export const navItems: NavItem[] = [
   {

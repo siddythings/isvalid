@@ -1,81 +1,82 @@
-'use client';
+"use client";
 
-import { FileUploader } from '@/components/file-uploader';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { FileUploader } from "@/components/file-uploader";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { Product } from '@/constants/mock-api';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { Product } from "@/constants/mock-api";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createProduct } from "@/data-handlers/product-data/create-product";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = [
-  'image/jpeg',
-  'image/jpg',
-  'image/png',
-  'image/webp'
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
 ];
 
 const formSchema = z.object({
   image: z
     .any()
-    .refine((files) => files?.length == 1, 'Image is required.')
+    .refine((files) => files?.length == 1, "Image is required.")
     .refine(
       (files) => files?.[0]?.size <= MAX_FILE_SIZE,
       `Max file size is 5MB.`
     )
     .refine(
       (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-      '.jpg, .jpeg, .png and .webp files are accepted.'
+      ".jpg, .jpeg, .png and .webp files are accepted."
     ),
   name: z.string().min(2, {
-    message: 'Product name must be at least 2 characters.'
+    message: "Product name must be at least 2 characters.",
   }),
-  category: z.string(),
   price: z.string(),
   description: z.string().min(10, {
-    message: 'Description must be at least 10 characters.'
-  })
+    message: "Description must be at least 10 characters.",
+  }),
 });
 
 export default function ProductForm({
   initialData,
-  pageTitle
+  pageTitle,
 }: {
   initialData: Product | null;
   pageTitle: string;
 }) {
   const defaultValues = {
-    name: initialData?.name || '',
-    category: initialData?.category || '',
-    price: initialData?.price || '0',
-    description: initialData?.description || ''
+    name: initialData?.name || "",
+    category: initialData?.category || "",
+    price: initialData?.price || "0",
+    description: initialData?.description || "",
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    values: defaultValues
+    values: defaultValues,
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  function onSubmit( values: z.infer<typeof formSchema>) {
+    // e.preventDefault();
+    createProduct(values);
   }
 
   return (
@@ -99,13 +100,13 @@ export default function ProductForm({
                       <FileUploader
                         value={field.value}
                         onValueChange={field.onChange}
-                        maxFiles={4}
-                        maxSize={4 * 1024 * 1024}
-                      // disabled={loading}
-                      // progresses={progresses}
-                      // pass the onUpload function here for direct upload
-                      // onUpload={uploadFiles}
-                      // disabled={isUploading}
+                        maxFiles={1}
+                        maxSize={5 * 1024 * 1024}
+                        // disabled={loading}
+                        // progresses={progresses}
+                        // pass the onUpload function here for direct upload
+                        // onUpload={uploadFiles}
+                        // disabled={isUploading}
                       />
                     </FormControl>
                     <FormMessage />

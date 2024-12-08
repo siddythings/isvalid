@@ -1,8 +1,8 @@
 import { Product } from '@/constants/data';
-import { fakeProducts } from '@/constants/mock-api';
 import { searchParamsCache } from '@/lib/searchparams';
 import { DataTable as ProductTable } from '@/components/ui/table/data-table';
 import { columns } from './product-tables/columns';
+import {getProducts} from "@/data-handlers/product-data/get-products";
 
 type ProductListingPage = {};
 
@@ -19,11 +19,9 @@ export default async function ProductListingPage({}: ProductListingPage) {
     ...(search && { search }),
     ...(categories && { categories: categories })
   };
-
-  const data = await fakeProducts.getProducts(filters);
-  const totalProducts = data.total_products;
-  const products: Product[] = data.products;
-
+  const data = await getProducts();
+  const totalProducts = data.length;
+  const products: Product[] = data;  
   return (
     <ProductTable
       columns={columns}

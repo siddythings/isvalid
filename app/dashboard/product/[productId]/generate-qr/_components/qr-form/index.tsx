@@ -15,8 +15,13 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { createQR } from "@/data-handlers/create-qr";
+import { useParams } from "next/navigation";
 
 const QRForm = () => {
+  const params = useParams();
+  const productId = params.productId as string;
+
   const formSchema = z.object({
     serialNo: z
       .string()
@@ -39,6 +44,7 @@ const QRForm = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    createQR(productId, values.serialNo, values.batchNo);
   }
 
   return (
