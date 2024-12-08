@@ -89,13 +89,14 @@ class QRService:
     #     img_1.save("qr_rounded_no_border.png")
 
     @staticmethod
-    def create_product_qr(product_id, user_id):
+    def create_product_qr(qr_details, product_id, user_id):
         object_id = ObjectId()
         URL = os.getenv("ISVALID_URL", 'https://google.com')
         QR_URL = f'{URL}/{str(object_id)}'
         qr_product_data = {
             '_id': object_id,
             'id': str(object_id),
+            'qr_details': qr_details,
             'product_id': product_id,
             'user_id': user_id,
             'url': QR_URL,
