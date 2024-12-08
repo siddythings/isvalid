@@ -126,3 +126,15 @@ class QRService:
             "id": qr_id,
         }, {'$set': product_data})
         return list(qr_product_data)
+
+    @staticmethod
+    def get_product_details_by_qr_id(qr_id):
+        data = qrcode_collection.find_one({
+            'id': qr_id
+        }, {'_id': 0})
+        prduct = products_collection.find_one(
+            {'id': data.get("product_id")}, {'_id': 0})
+        data.update(
+            prduct
+        )
+        return data
