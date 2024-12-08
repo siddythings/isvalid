@@ -51,7 +51,7 @@ class ProductService:
     @staticmethod
     def get_products_by_user_id(user_id):
         all_products = products_collection.find(
-            {'user_id': user_id, "is_deleted": False}, {'_id': 0})
+            {'user_id': user_id, "is_deleted": False}, {'_id': 0}).sort({'_id': -1})
         return list(all_products)
 
     @staticmethod
@@ -112,7 +112,7 @@ class QRService:
     def get_products_qr(product_id):
         qr_product_data = qrcode_collection.find({
             "product_id": product_id,
-        }, {'_id': 0})
+        }, {'_id': 0}).sort({'_id': -1})
         return list(qr_product_data)
 
     @staticmethod
