@@ -94,7 +94,7 @@ class CreateQRProductResource(Resource):
         if not product_id:
             return ResponseHandler.error(HTTPStatusCode.NOT_FOUND, message="Product ID not found")
 
-        qr_details = requested_data.get("requested_data", {})
+        qr_details = requested_data.get("qr_details", {})
         new_product = QRService.create_product_qr(
             qr_details, product_id, user_id)
         return ResponseHandler.success(data=new_product, message="Product created")
