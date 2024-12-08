@@ -45,7 +45,7 @@ export default function UserAuthForm() {
           signIn("credentials", {
             email: data.email,
             name: res.name,
-            callbackUrl: callbackUrl ?? "/dashboard",
+            callbackUrl: callbackUrl ?? "/dashboard/product",
           });
           toast.success("Signed In Successfully!");
         });
