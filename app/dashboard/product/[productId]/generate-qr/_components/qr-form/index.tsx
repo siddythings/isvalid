@@ -44,7 +44,9 @@ const QRForm = () => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    createQR(productId, values.serialNo, values.batchNo);
+    createQR(productId, values.serialNo, values.batchNo).then((res) => {
+      window.location.reload();
+    } )
   }
 
   return (
