@@ -12,3 +12,4 @@ IsValidDB = client[DB_NAME]
 # Links collection
 users_collection = IsValidDB.users
 products_collection = IsValidDB.products
+qrcode_collection = IsValidDB.qrcode
