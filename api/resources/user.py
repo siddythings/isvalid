@@ -127,8 +127,10 @@ class LoginUser(Resource):
             access_token = create_access_token(
                 data={"sub": user["email"]}, expires_delta=access_token_expires
             )
+
             return ResponseHandler.success(
-                data={"access_token": access_token, "token_type": "bearer"},
+                data={"access_token": access_token,
+                      "token_type": "bearer", "name": user.get("name", "DEMO")},
                 message="User Login Done",
             )
         return ResponseHandler.error(
