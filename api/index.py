@@ -11,6 +11,7 @@ from api.common.http_status_codes import HTTPStatusCode
 
 from api.routes.users import users_bp
 from api.routes.products import product_bp
+from api.routes.presigned_url import presigned_bp
 
 
 # Load environment variables from the .env file
@@ -42,6 +43,7 @@ api = Api(app)
 # app.register_blueprint(product_bp)
 app.register_blueprint(users_bp)
 app.register_blueprint(product_bp)
+app.register_blueprint(presigned_bp)
 
 
 @app.route("/")
