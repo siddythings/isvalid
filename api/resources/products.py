@@ -153,3 +153,9 @@ class GetProductResource(Resource):
         new_product = QRService.get_product_details_by_qr_id(
             qr_id)
         return ResponseHandler.success(data=new_product, message="Product")
+
+    def post(self, qr_id):
+        user_id = "g.id"
+        new_product = QRService.get_product_details_by_qr_id(
+            qr_id)
+        return ResponseHandler.success(data=new_product, message="Product")
