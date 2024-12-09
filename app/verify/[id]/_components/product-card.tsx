@@ -4,14 +4,10 @@ import { Button } from "@/components/ui/button";
 import { markOwnership } from "@/data-handlers/verify-qr";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
+import { ProductVerification } from "@/constants/data";
 
 interface Props {
-  productData: {
-    name: string;
-    price: string;
-    image: string;
-    description: string;
-  };
+  productData: ProductVerification;
 }
 
 const ProductCard = ({ productData }: Props) => {
@@ -33,12 +29,12 @@ const ProductCard = ({ productData }: Props) => {
       <div className="w-[350px] border border-gray-700 rounded-lg shadow-lg shadow-gray-900/50 hover:shadow-gray-800/50 transition-shadow my-6 mx-auto ">
         <Card>
           <CardHeader>
-            <CardTitle>{productData?.name}</CardTitle>
+            <CardTitle>{productData?.product_details?.name}</CardTitle>
           </CardHeader>
           <CardContent>
             <img
-              src={productData?.image}
-              alt={productData?.name}
+              src={productData?.product_details?.image}
+              alt={productData?.product_details?.name}
               style={{
                 height: "auto",
                 width: "100%",
@@ -46,20 +42,22 @@ const ProductCard = ({ productData }: Props) => {
             />
           </CardContent>
           <CardContent>
-            <p>Price: {productData?.price}</p>
+            <p>Price: {productData?.product_details?.price}</p>
             <br />
-            <p>Description: {productData?.description}</p>
+            <p>Description: {productData?.product_details?.description}</p>
           </CardContent>
         </Card>
       </div>
 
-      <Button
-        onClick={() => {
-          clickHandler();
-        }}
-      >
-        Mark Ownership
-      </Button>
+      {!productData?.is_validated && (
+        <Button
+          onClick={() => {
+            clickHandler();
+          }}
+        >
+          Mark Ownership
+        </Button>
+      )}
     </div>
   );
 };

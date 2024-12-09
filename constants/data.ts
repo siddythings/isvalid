@@ -8,6 +8,7 @@ export type User = {
   verified: boolean;
   status: string;
 };
+
 export const users: User[] = [
   {
     id: 1,
@@ -119,6 +120,32 @@ export interface Product {
   updated_at: string; // ISO date string
   product_details: ProductDetails;
 }
+
+export interface QRDetails {
+  [key: string]: any; // Empty object or unknown fields
+}
+
+export interface ProductDetails {
+  name: string;
+  price: string;
+  image: string;
+  description: string;
+}
+
+export interface ProductVerification {
+  id: string;
+  qr_details: QRDetails;
+  product_id: string;
+  user_id: string;
+  url: string;
+  is_published: boolean;
+  is_deleted: boolean;
+  created_at: string; // ISO date string
+  updated_at: string; // ISO date string
+  is_validated: boolean;
+  product_details: ProductDetails;
+}
+
 
 export interface ProductDetails {
   name: string;
