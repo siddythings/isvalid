@@ -138,3 +138,11 @@ class QRService:
             prduct
         )
         return data
+
+    @staticmethod
+    def post_product_details_by_qr_id(qr_id):
+        qrcode_collection.update_one({'id': qr_id}, {
+            "$set": {
+                "is_validated": True
+            }
+        })
