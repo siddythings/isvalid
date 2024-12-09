@@ -150,13 +150,6 @@ class GetProductResource(Resource):
     # @authenticate_token
     def get(self, qr_id):
         user_id = "g.id"
-
-        requested_data = request.get_json()
         new_product = QRService.get_product_details_by_qr_id(
             qr_id)
         return ResponseHandler.success(data=new_product, message="Product")
-
-    # This will prevent other HTTP methods from being accepted on this route
-    method_decorators = {'post': [method_not_allowed],
-                         'put': [method_not_allowed],
-                         'delete': [method_not_allowed]}
