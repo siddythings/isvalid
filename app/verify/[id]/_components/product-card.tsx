@@ -49,7 +49,7 @@ const ProductCard = ({ productData }: Props) => {
         </Card>
       </div>
 
-      {!productData?.is_validated && (
+      {!productData?.is_validated ? (
         <Button
           onClick={() => {
             clickHandler();
@@ -57,6 +57,10 @@ const ProductCard = ({ productData }: Props) => {
         >
           Mark Ownership
         </Button>
+      ) : (
+        <div className='bg-red-600 p-3 rounded-lg'>
+          <p>This product's ownership has already been marked.</p>
+        </div>
       )}
     </div>
   );
