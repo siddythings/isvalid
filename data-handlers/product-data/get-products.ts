@@ -7,6 +7,7 @@ export const getProducts = async () => {
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "no-store",
     });
     
     if (!data.ok) {
@@ -28,6 +29,7 @@ export const getProductQRByID = async (id: string) => {
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "no-store",
     });
     
     if (!data.ok) {

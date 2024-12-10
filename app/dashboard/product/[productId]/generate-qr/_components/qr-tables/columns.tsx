@@ -28,6 +28,14 @@ export const columns: ColumnDef<Product>[] = [
     header: "QR-ID",
   },
   {
+    accessorKey: "qr_details.serial_no",
+    header: "Serial No.",
+  },
+  {
+    accessorKey: "qr_details.batch_no",
+    header: "Batch No.",
+  },
+  {
     accessorKey: "url",
     header: "QR LINK",
     cell: ({ row }) => (
@@ -98,15 +106,4 @@ export const columns: ColumnDef<Product>[] = [
       );
     },
   },
-  
-  
-  //   {
-  //     accessorKey: 'description',
-  //     header: 'DESCRIPTION'
-  //   },
-
-  //   {
-  //     id: 'actions',
-  //     cell: ({ row }) => <CellAction data={row.original} />
-  //   }
 ];

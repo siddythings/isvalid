@@ -17,14 +17,18 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { createQR } from "@/data-handlers/create-qr";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const QRForm = () => {
   const params = useParams();
   const productId = params.productId as string;
+  const router = useRouter();
 
   const formSchema = z.object({
     serialNo: z
       .string()
+      .min(1, "Serial number is required") // Ensures the string is not empty
+      .min(4, "Serial number must be at least 4 characters")
       .max(30, "Serial number should not exceed 30 characters"),
     batchNo: z
       .string()
@@ -43,10 +47,11 @@ const QRForm = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     createQR(productId, values.serialNo, values.batchNo).then((res) => {
-      window.location.reload();
-    } )
+      setTimeout(() => {
+        router.refresh();
+      }, 500);
+    });
   }
 
   return (
