@@ -1,13 +1,9 @@
 import FormCardSkeleton from "@/components/form-card-skeleton";
 import PageContainer from "@/components/layout/page-container";
 import { Suspense } from "react";
-import { fakeProducts, fakeUsers } from "@/constants/mock-api";
-import { DataTable as ProductTable } from "@/components/ui/table/data-table";
-import { searchParamsCache } from "@/lib/searchparams";
-import { columns } from "../../../product/_components/product-tables/columns";
-import { Product } from "@/constants/data";
 import QrListing from "./_components/qr-listing";
 import QRForm from "./_components/qr-form";
+import { getProductQRByID } from "@/data-handlers/product-data/get-products";
 
 export const metadata = {
   title: "Dashboard : QR Listing",
@@ -16,7 +12,8 @@ export const metadata = {
 type PageProps = { params: { productId: string } };
 
 export default async function Page({ params }: PageProps) {
-  
+  const data = await getProductQRByID(params?.productId);
+
   return (
     <PageContainer scrollable>
       <div className="flex-1 space-y-4">
@@ -24,7 +21,7 @@ export default async function Page({ params }: PageProps) {
           <QRForm />
         </Suspense>
         <Suspense fallback={<FormCardSkeleton />}>
-          <QrListing productID = {params?.productId} />
+          <QrListing productData={data} />
         </Suspense>
       </div>
     </PageContainer>

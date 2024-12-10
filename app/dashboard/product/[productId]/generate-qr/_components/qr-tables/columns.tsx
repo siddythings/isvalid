@@ -89,12 +89,12 @@ export const columns: ColumnDef<Product>[] = [
       };
   
       return (
-        <button
+        <Button
           onClick={handleDownload}
-          className="border border-gray-300 rounded px-2 py-1 text-sm hover:bg-gray-100"
+          className="rounded px-2 py-1 text-sm hover:bg-gray-100"
         >
           Download PNG
-        </button>
+        </Button>
       );
     },
   },

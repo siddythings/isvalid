@@ -1,23 +1,20 @@
-import { Product } from '@/constants/data';
-import { DataTable as ProductTable } from '@/components/ui/table/data-table';
-import { columns } from './qr-tables/columns';
-import { getProductQRByID } from '@/data-handlers/product-data/get-products';
+import { Product } from "@/constants/data";
+import { DataTable as ProductTable } from "@/components/ui/table/data-table";
+import { columns } from "./qr-tables/columns";
 
 type ProductListingPage = {
-  productID: string
+  productData: any;
 };
 
-export default async function ProductListingPage({productID}: ProductListingPage) {
-  // Showcasing the use of search params cache in nested RSCs
-
-  const data = await getProductQRByID(productID);
-  
-  if (!data?.length) {
+export default async function ProductListingPage({
+  productData,
+}: ProductListingPage) {
+  if (!productData?.length) {
     return <>No Records</>;
   }
 
-  const totalProducts = data.length;
-  const products: Product[] = data;
+  const totalProducts = productData.length;
+  const products: Product[] = productData;
 
   return (
     <ProductTable
