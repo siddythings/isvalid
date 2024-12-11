@@ -26,7 +26,7 @@ export const getImageURL = async (file: File) => {
   return finalURL;
 };
 
-export const createProduct = async (product: Product) => {
+export const createProduct = async (product: any) => {
   const imageURL = await getImageURL(product.image[0]);
   const payload = {
     product_details: {

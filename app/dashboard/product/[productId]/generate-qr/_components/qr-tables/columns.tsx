@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import QRCode from "react-qr-code";
 import { Button } from "@/components/ui/button"; 
 
-export const columns: ColumnDef<Product>[] = [
+export const columns: ColumnDef<any>[] = [
   {
     accessorKey: "url",
     header: "QR-IMAGE",
@@ -39,7 +39,8 @@ export const columns: ColumnDef<Product>[] = [
     accessorKey: "url",
     header: "QR LINK",
     cell: ({ row }) => (
-      <a href={row.original.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">
+      // @ts-ignore
+      <a href={row.original.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline"> 
         {row.original.url}
       </a>
     ),

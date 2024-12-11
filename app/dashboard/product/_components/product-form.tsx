@@ -65,7 +65,7 @@ export default function ProductForm({
   const defaultValues = {
     name: initialData?.name || "",
     category: initialData?.category || "",
-    price: initialData?.price || "0",
+    price: String(initialData?.price || "0"),
     description: initialData?.description || "",
   };
 
@@ -74,9 +74,16 @@ export default function ProductForm({
     values: defaultValues,
   });
 
-  function onSubmit( values: z.infer<typeof formSchema>) {
-    // e.preventDefault();
-    createProduct(values);
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    const productData = {
+      ...values,
+      is_published: true,
+      is_deleted: false,
+      user_id: "default_user", // Replace with actual user ID from auth
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
+    };
+    createProduct(productData);
   }
 
   return (
