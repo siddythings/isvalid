@@ -46,22 +46,26 @@ const ProductCard = ({ productData }: Props) => {
             <br />
             <p>Description: {productData?.product_details?.description}</p>
           </CardContent>
+
+          <CardContent>
+            {!productData?.is_validated ? (
+              <Button
+                style={{ height: "50px", width: "100%" }}
+                onClick={() => {
+                  clickHandler();
+                }}
+              >
+                Mark your ownership to prevent anyone else from being scammed.
+              </Button>
+            ) : (
+              <div className='bg-red-600 p-3 rounded-lg'>
+                <p>This product's has already been marked. May be it not original</p>
+              </div>
+            )}
+          </CardContent>
+
         </Card>
       </div>
-
-      {!productData?.is_validated ? (
-        <Button
-          onClick={() => {
-            clickHandler();
-          }}
-        >
-          Mark Ownership
-        </Button>
-      ) : (
-        <div className='bg-red-600 p-3 rounded-lg'>
-          <p>This product's ownership has already been marked.</p>
-        </div>
-      )}
     </div>
   );
 };
