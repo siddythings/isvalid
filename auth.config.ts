@@ -41,7 +41,7 @@ const authConfig = {
   pages: {
     signIn: '/' //sigin page
   },
-  secret: "your_secret_key",
+  secret: process.env.NEXTAUTH_SECRET,
 } satisfies NextAuthConfig;
 
 export default authConfig;
