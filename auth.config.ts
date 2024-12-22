@@ -1,47 +1,70 @@
 import { NextAuthConfig } from 'next-auth';
-import CredentialProvider from 'next-auth/providers/credentials';
+import CredentialsProvider from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
 
-const authConfig = {
+const authConfig: NextAuthConfig = {
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID ?? '',
-      clientSecret: process.env.GITHUB_SECRET ?? ''
+      clientSecret: process.env.GITHUB_SECRET ?? '',
     }),
-    CredentialProvider({
+    CredentialsProvider({
+      name: 'Credentials',
       credentials: {
-        email: {
-          type: 'email'
-        },
-        password: {
-          type: 'password'
-        },
-        name : {
-          type: 'name'
-        }
+        name: { label: 'Name', type: 'text' },
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
-        const user = {
-          id: '1',
-          name: credentials?.name as string,
-          email: credentials?.email as string
-        };
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return user;
-        } else {
-          // If you return null then an error will be displayed advising the user to check their details.
-          return null;
+      async authorize(credentials) {
+        // Validate the credentials (e.g., query your database or external API)
+        if (credentials) {
+          const user = {
+            id: '1', // Replace with actual user ID
+            name: credentials.name as string,
+            email: credentials.email as string,
+            emailVerified: null, // Include this property
+          };
 
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+          // Validate user data (e.g., check password, etc.)
+          if (user.name && user.email) {
+            return user; // Must return an object matching the AdapterUser type
+          }
         }
-      }
-    })
+
+        // Return null if user authentication fails
+        return null;
+      },
+    }),
   ],
   pages: {
-    signIn: '/' //sigin page
+    signIn: '/', // Custom sign-in page
   },
   secret: process.env.NEXTAUTH_SECRET,
-} satisfies NextAuthConfig;
+  session: {
+    strategy: 'jwt',
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+        token.email = user.email;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        // @ts-ignore
+        session.user = {
+          id: token.id as string,
+          name: token.name as string,
+          email: token.email as string,
+        };
+      }
+      return session;
+    },
+  },
+  debug: true, // Enable detailed logging
+};
 
 export default authConfig;
