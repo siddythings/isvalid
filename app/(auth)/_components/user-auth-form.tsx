@@ -100,7 +100,6 @@ export default function UserAuthForm() {
           <Button disabled={loading} className="ml-auto w-full" type="submit">
             Continue With Email
           </Button>
-          <p onClick={() => router.push('/dashboard/product')}>LINK</p>
         </form>
       </Form>
       {/* <div className="relative">

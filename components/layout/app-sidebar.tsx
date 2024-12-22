@@ -39,7 +39,7 @@ import {
   GalleryVerticalEnd,
   LogOut
 } from 'lucide-react';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import * as React from 'react';
@@ -54,6 +54,11 @@ export const company = {
 export default function AppSidebar() {
   const { data: session } = useSession();  
   const pathname = usePathname();
+
+  const logout = () => {
+    localStorage.removeItem('user');
+    window.location.href = '/';
+  }
 
   return (
     <Sidebar collapsible="icon">
@@ -203,7 +208,7 @@ export default function AppSidebar() {
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => signOut()}>
+                <DropdownMenuItem onClick={() => logout()}>
                   <LogOut />
                   Log out
                 </DropdownMenuItem>
