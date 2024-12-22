@@ -10,12 +10,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { userLogin } from "@/data-handlers/auth/login";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
+import { useRouter } from 'next/navigation'
 
 const formSchema = z.object({
   email: z.string().email({ message: "Enter a valid email address" }),
@@ -26,6 +26,7 @@ type UserFormValue = z.infer<typeof formSchema>;
 
 export default function UserAuthForm() {
   const searchParams = useSearchParams();
+  const router = useRouter()
   const callbackUrl = searchParams.get("callbackUrl");
   const [loading, startTransition] = useTransition();
   const defaultValues = {
@@ -38,24 +39,20 @@ export default function UserAuthForm() {
     defaultValues,
   });
 
+
   const onSubmit = async (data: UserFormValue) => {
-    userLogin(data.email, data.password)
-    .then((res) => {
-        startTransition(() => {
-          signIn("credentials", {
-            email: data.email,
-            name: res.name,
-            callbackUrl: callbackUrl ?? "/dashboard/product",
-          });
-          toast.success("Signed In Successfully!");
-        });
-
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
+    try {
+      const res = await userLogin(data.email, data.password);
+      localStorage.setItem("user", JSON.stringify(res));
+      toast.success("Signed In Successfully!");
+      router.push('/dashboard/product');
+    } catch (err: any) {
+      console.error("Login error:", err); // Log the error
+      toast.error(err.message);
+    }
   };
-
+  
+  
   return (
     <>
       <Form {...form}>
@@ -103,6 +100,7 @@ export default function UserAuthForm() {
           <Button disabled={loading} className="ml-auto w-full" type="submit">
             Continue With Email
           </Button>
+          <p onClick={() => router.push('/dashboard/product')}>LINK</p>
         </form>
       </Form>
       {/* <div className="relative">
