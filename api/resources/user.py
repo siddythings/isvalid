@@ -130,7 +130,7 @@ class LoginUser(Resource):
 
             return ResponseHandler.success(
                 data={"access_token": access_token,
-                      "token_type": "bearer", "name": user.get("name", "DEMO")},
+                      "token_type": "bearer", "name": user.get("name", "DEMO"), "email": email},
                 message="User Login Done",
             )
         return ResponseHandler.error(
